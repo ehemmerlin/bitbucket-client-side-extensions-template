@@ -54,8 +54,8 @@
     },
     "scripts": {
         "watch": "webpack --watch --display-modules --config ./config/webpack.config.js",
-        "start": "mvn package -DskipTests -Pwatch-mode && npm run dev-server ",
-        "build": "mvn package -DskipTests",
+        "start": "atlas-package -DskipTests -Pwatch-mode && npm run dev-server ",
+        "build": "atlas-package -DskipTests",
         "build:prod": "webpack --config ./config/webpack.config.js",
         "build:dev": "webpack --config ./config/webpack.config.js --mode=development",
         "dev-server": "webpack-dev-server --config ./config/webpack.config.js --mode=development --env=dev-server",

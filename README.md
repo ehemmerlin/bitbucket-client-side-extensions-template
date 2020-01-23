@@ -4,19 +4,20 @@ Bitbucket Server [Client-side Extension](https://developer.atlassian.com/server/
  - **Node** 12.13.0 (you can use nvm)
  - **Maven** 3.6.2
  - **Java JDK** 1.8
+ - [**Atlassian SDK**](https://developer.atlassian.com/server/framework/atlassian-sdk/downloads/)
 
 ## Starting Bitbucket
 
 To start Bitbucket, first install all of the maven dependencies:
 
 ```sh
-mvn -T 1C clean install -DskipTests
+atlas-package -DskipTests
 ```
 
-and then run this command to start Bitbucket:
+Next, run this command to start Bitbucket:
 
 ```sh
-mvn bitbucket:run -DskipTests
+atlas-run -DskipTests
 ```
 
 ## Developing the plugin

@@ -237,7 +237,7 @@
         <frontend.maven.plugin.version>1.6</frontend.maven.plugin.version>
         <frontend.maven.plugin.install.directory>${project.build.directory}</frontend.maven.plugin.install.directory>
         <nodeVersion>v12.13.0</nodeVersion>
-        <fe.cmd.install>ci --no-progress</fe.cmd.install>
+        <fe.cmd.install>install --no-progress</fe.cmd.install>
         <fe.cmd.build>build:prod</fe.cmd.build>
         <fe.cmd.build.dev>build:dev</fe.cmd.build.dev>
         <frontend.working.directory>src/main/my-app</frontend.working.directory>
@@ -251,7 +251,7 @@
         <soy.version>5.0.0</soy.version>
         <webfragments.version>5.1.0</webfragments.version>
 
-        <bitbucket.version>7.0.0-m7</bitbucket.version>
+        <bitbucket.version>7.0.0-m8</bitbucket.version>
         <bitbucket.data.version>${bitbucket.version}</bitbucket.data.version>
         <bitbucket.osgi.version>7.0.0</bitbucket.osgi.version>
 
