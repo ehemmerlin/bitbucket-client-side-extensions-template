@@ -32,14 +32,16 @@ this will enable you to make quick changes with instant preview.
 
 ## Using a template to build your plugin
 
-By default this template have a few a pre-defined plugin keys that should be unique for every plugin. 
-To build your own custom plugin you should rename the **group id**, **artifact id** and the **plugin key** values:
+By default, this template has a few pre-defined plugin keys that should be unique for every plugin.
+ 
+To build your plugin you should rename the **group id**, **artifact id** and the **plugin key** values:
 
  - artifact id: `bitbucket-plugin-template`
  - group id: `com.atlassian.myapp`   
  - plugin key: `com.atlassian.myapp.bitbucket-plugin-template`
  
 You should find and replace those values in all of the files:
+
  - `config/webpack.constants.js` - `PLUGIN_KEY` const
  - `pom.xml` - `groupId` and `artifactId` tags
  - `package.json` - `name` field
