@@ -1,4 +1,5 @@
 import React from 'react';
+import { object } from 'prop-types';
 import Button from '@atlaskit/button';
 import * as formatter from 'wrm/i18n';
 import * as navbuilder from 'bitbucket/util/navbuilder';
@@ -14,3 +15,7 @@ export default function MyApp({ pullRequest }) {
         </div>
     );
 }
+
+MyApp.propTypes = {
+    pullRequest: object.isRequired,
+};

@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const ClientsideExtensionWebpackPlugin = require('@atlassian/clientside-extensions-webpack-plugin');
 
 const {
-    PLUGIN_KEY,
     DEV_SERVER_HOST,
     DEV_SERVER_PORT,
     FRONTEND_OUTPUT_DIR,
