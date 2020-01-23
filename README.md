@@ -1,8 +1,13 @@
 Bitbucket Server [Client-side Extension](https://developer.atlassian.com/server/framework/clientside-extensions/) template powered by JavaScript, Webpack, React, and [Atlaskit](https://atlaskit.atlassian.com/).
 
+## Requirements
+ - **Node** 12.13.0 (you can use nvm)
+ - **Maven** 3.6.2
+ - **Java JDK** 1.8
+
 ## Starting Bitbucket
 
-To start Bitbucket, first install all of the dependencies:
+To start Bitbucket, first install all of the maven dependencies:
 
 ```sh
 mvn -T 1C clean install -DskipTests
@@ -24,22 +29,16 @@ It builds the frontend and puts it in the watch mode with hot reload.
 In other words, if you have the whole plugin and an instance already working,
 this will enable you to make quick changes with instant preview.
 
-## Before you git push
+## Using a template to build your plugin
 
-Any unit tests or eslint errors will cause the build to fail,
-so it's worth checking these before you push to branch.
+By default this template have a few a pre-defined plugin keys that should be unique for every plugin. 
+To build your own custom plugin you should rename the **group id**, **artifact id** and the **plugin key** values:
 
-### `npm test`
-
-For running UI tests.
-
-### `npm run lint`
-
-Checks the frontend plugin for styling errors.
-
-The ruleset is set to be compatible with other Server plugins,
-so please mind that when considering making changes to it.
-
-### `npm run lint --fix`
-
-Will additionally fix any automatically-fixable issues.
+ - artifact id: `bitbucket-plugin-template`
+ - group id: `com.atlassian.myapp`   
+ - plugin key: `com.atlassian.myapp.bitbucket-plugin-template`
+ 
+You should find and replace those values in all of the files:
+ - `config/webpack.constants.js` - `PLUGIN_KEY` const
+ - `pom.xml` - `groupId` and `artifactId` tags
+ - `package.json` - `name` field

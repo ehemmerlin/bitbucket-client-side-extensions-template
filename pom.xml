@@ -119,9 +119,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <includeExclude>
-                        -com.atlassian.myapp.internal.properties.*,-com.atlassian.myapp.internal.requesthandler.logging.*
-                    </includeExclude>
                     <scannedDependencies>
                         <dependency>
                             <groupId>com.atlassian.plugin</groupId>
