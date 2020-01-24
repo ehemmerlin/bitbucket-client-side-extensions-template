@@ -77,8 +77,6 @@ function getLoaders({ isProductionEnv = false }) {
                 },
             ],
         },
-
-        { test: /\.jsx?$/, loader: 'babel-loader' },
     ];
 }
 
