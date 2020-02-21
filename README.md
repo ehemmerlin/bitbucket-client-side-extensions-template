@@ -6,6 +6,10 @@ Bitbucket Server [Client-side Extension](https://developer.atlassian.com/server/
  - **Java JDK** 1.8
  - [**Atlassian SDK 8**](https://developer.atlassian.com/server/framework/atlassian-sdk/downloads/)
 
+## Bitbucket
+
+This template includes the  Bitbucket version **7.0.0-EAP2**
+
 ## Starting Bitbucket
 
 To start Bitbucket, first install all of the maven dependencies:
