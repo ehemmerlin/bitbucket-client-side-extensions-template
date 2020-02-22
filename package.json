@@ -5,17 +5,17 @@
     "author": "Atlassian Pty Ltd",
     "license": "Atlassian End User License",
     "dependencies": {
-        "@atlaskit/button": "13.3.5",
-        "@atlassian/clientside-extensions": "0.7.0",
-        "@atlassian/wrm-react-i18n": "0.4.3",
+        "@atlaskit/button": "13.3.6",
+        "@atlassian/clientside-extensions": "0.9.0",
+        "@atlassian/wrm-react-i18n": "0.4.5",
         "prop-types": "15.7.2",
         "react": "16.12.0",
         "react-dom": "16.12.0",
         "styled-components": "3.4.10"
     },
     "devDependencies": {
-        "@atlassian/clientside-extensions-webpack-plugin": "0.7.0",
-        "@atlassian/i18n-properties-loader": "0.4.4",
+        "@atlassian/clientside-extensions-webpack-plugin": "0.9.0",
+        "@atlassian/i18n-properties-loader": "0.7.3",
         "@babel/core": "7.5.5",
         "@babel/plugin-proposal-class-properties": "7.5.5",
         "@babel/plugin-transform-runtime": "7.6.2",
