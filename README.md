@@ -1,3 +1,5 @@
+# Bitbucket Server 7.0+ Plugin Template
+
 Bitbucket Server [Client-side Extension](https://developer.atlassian.com/server/framework/clientside-extensions/) template powered by JavaScript, Webpack, React, and [Atlaskit](https://atlaskit.atlassian.com/).
 
 ## Requirements
