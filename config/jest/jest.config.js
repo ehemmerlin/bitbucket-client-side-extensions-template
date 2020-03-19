@@ -10,7 +10,7 @@ module.exports = {
     verbose: true,
     roots: [paths.testsRoot],
     moduleFileExtensions: ['js', 'jsx', 'json'],
-    transformIgnorePatterns: ['node_modules/(?!(@atlaskit)/)'],
+    transformIgnorePatterns: ['node_modules/(?!(@atlassian/clientside-[^/]+))/'],
     moduleNameMapper: {
         '^wrm/i18n$': path.join(paths.mocksRoot, './wrm/i18n.js'),
         '^wrm/context-path$': path.join(paths.mocksRoot, './wrm/context-path.js'),
