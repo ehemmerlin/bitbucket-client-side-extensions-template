@@ -4,8 +4,8 @@ const glob = require('glob');
 const rootDir = path.resolve(__dirname, '..');
 const srcDir = path.join(rootDir, 'src');
 
-const I18N_SRC_DIR = path.join(srcDir, 'resources/i18n');
-const FRONTEND_SRC_DIR = path.join(srcDir, 'my-app');
+const I18N_SRC_DIR = path.join(srcDir, 'main/resources/i18n');
+const FRONTEND_SRC_DIR = path.join(srcDir, 'main/my-app');
 const FRONTEND_OUTPUT_DIR = path.join(rootDir, 'target', 'classes');
 
 // Plugin key needs to match the one provide in atlassian-plugin.xml file

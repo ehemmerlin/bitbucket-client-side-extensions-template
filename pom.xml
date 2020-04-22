@@ -69,25 +69,6 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>${basedir}/src</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>atlassian-plugin.xml</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>${basedir}/src</directory>
-                <filtering>false</filtering>
-                <includes>
-                    <include>**/*.properties</include>
-                </includes>
-                <excludes>
-                    <exclude>atlassian-plugin.xml</exclude>
-                </excludes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
