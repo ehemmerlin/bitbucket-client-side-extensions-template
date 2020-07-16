@@ -2,7 +2,7 @@ const path = require('path');
 
 const paths = {
     mocksRoot: path.resolve('./src/mocks'),
-    testsRoot: path.resolve('./src/my-app/'),
+    testsRoot: path.resolve('./src/main/my-app/'),
 };
 
 module.exports = {

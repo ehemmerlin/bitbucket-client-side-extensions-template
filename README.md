@@ -10,11 +10,11 @@ Bitbucket Server [Client-side Extension](https://developer.atlassian.com/server/
 
 ## Bitbucket
 
-This template includes the  Bitbucket version **7.0.0-EAP2**
+This template includes the  Bitbucket version **7.4.0**
 
 ## Starting Bitbucket
 
-To start Bitbucket, first install all of the maven dependencies:
+To start Bitbucket, first install all the maven dependencies:
 
 ```sh
 atlas-package -DskipTests
@@ -33,8 +33,8 @@ In the project directory, you can run:
 ### `npm start`
 
 It builds the frontend and puts it in the watch mode with hot reload.
-In other words, if you have the whole plugin and an instance already working,
-this will enable you to make quick changes with instant preview.
+In other words, if you have the whole plugin, and an instance already working,
+this will enable you to make quick changes with an instant preview.
 
 ## Using a template to build your plugin
 
@@ -46,7 +46,7 @@ To build your plugin you should rename the **group id**, **artifact id** and the
  - group id: `com.atlassian.myapp`   
  - plugin key: `com.atlassian.myapp.bitbucket-plugin-template`
  
-You should find and replace those values in all of the files:
+You should find and replace those values in all the files:
 
  - `config/webpack.constants.js` - `PLUGIN_KEY` const
  - `pom.xml` - `groupId` and `artifactId` tags

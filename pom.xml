@@ -232,7 +232,7 @@
         <soy.version>5.0.0</soy.version>
         <webfragments.version>5.1.0</webfragments.version>
 
-        <bitbucket.version>7.0.0</bitbucket.version>
+        <bitbucket.version>7.4.0</bitbucket.version>
         <bitbucket.data.version>${bitbucket.version}</bitbucket.data.version>
         <bitbucket.osgi.version>7.0.0</bitbucket.osgi.version>
 
