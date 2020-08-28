@@ -66,6 +66,22 @@
             <version>${webfragments.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.atlassian.plugins</groupId>
+            <artifactId>atlassian-plugins-webresource-api</artifactId>
+            <version>${webresources.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.json</groupId>
+            <artifactId>atlassian-json-api</artifactId>
+            <version>${jsonapi.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.libversion}</version>
+        </dependency>
         <!-- Page bootstrapper dependencies -->
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
@@ -227,6 +243,9 @@
         <amps.version>8.0.0</amps.version>
         <soy.version>5.0.0</soy.version>
         <webfragments.version>5.1.0</webfragments.version>
+        <webresources.version>4.1.3</webresources.version>
+        <jsonapi.version>0.11</jsonapi.version>
+        <gson.libversion>2.3.1</gson.libversion>
 
         <bitbucket.version>7.4.0</bitbucket.version>
         <bitbucket.data.version>${bitbucket.version}</bitbucket.data.version>
