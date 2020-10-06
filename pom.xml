@@ -234,7 +234,7 @@
         <fe.cmd.build>build:prod</fe.cmd.build>
         <fe.cmd.build.dev>build:dev</fe.cmd.build.dev>
         <frontend.working.directory>src/main/my-app</frontend.working.directory>
-        <cse.version>1.2.0-0665ef4</cse.version>
+        <cse.version>1.2.1</cse.version>
 
         <sal.version>4.0.0</sal.version>
         <spring.version>5.0.10.RELEASE</spring.version>
