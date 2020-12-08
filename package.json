@@ -6,7 +6,8 @@
     "license": "Atlassian End User License",
     "dependencies": {
         "@atlaskit/button": "13.3.6",
-        "@atlassian/clientside-extensions": "^1.2.3",
+        "@atlassian/clientside-extensions": "^2.0.0-beta-6",
+        "@atlassian/clientside-extensions-components": "^2.0.0-beta-6",
         "@atlassian/wrm-react-i18n": "0.4.5",
         "prop-types": "15.7.2",
         "react": "16.12.0",
@@ -14,7 +15,8 @@
         "styled-components": "3.4.10"
     },
     "devDependencies": {
-        "@atlassian/clientside-extensions-webpack-plugin": "^1.2.3",
+        "@atlassian/clientside-extensions-schema": "^2.0.0-beta-6",
+        "@atlassian/clientside-extensions-webpack-plugin": "^2.0.0-beta-6",
         "@atlassian/i18n-properties-loader": "0.7.3",
         "@babel/core": "7.5.5",
         "@babel/plugin-proposal-class-properties": "7.5.5",

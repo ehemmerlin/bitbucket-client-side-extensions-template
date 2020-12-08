@@ -77,6 +77,11 @@ function getLoaders({ isProductionEnv = false }) {
                 },
             ],
         },
+
+        {
+            test: /\.cse.graphql$/,
+            loader: '@atlassian/clientside-extensions-schema/loader',
+        },
     ];
 }
 

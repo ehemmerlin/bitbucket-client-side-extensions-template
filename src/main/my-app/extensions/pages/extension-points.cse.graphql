@@ -1,0 +1,18 @@
+"""
+---
+extensionPoint: tutorial.extension.points
+---
+"""
+type Schema {
+    type: ButtonExtension!
+
+    """
+    Label of the link
+    """
+    label: String!
+
+    """
+    Callback will be run when user clicks the button
+    """
+    onAction: Function
+}
