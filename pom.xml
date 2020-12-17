@@ -101,23 +101,6 @@
                     <compressJs>false</compressJs>
                     <compressCss>false</compressCss>
                     <enableQuickReload>true</enableQuickReload>
-                    <instructions>
-                        <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
-                        <Atlassian-Scan-Folders>META-INF/plugin-descriptors</Atlassian-Scan-Folders>
-                        <Import-Package>
-                            com.atlassian.plugin.clientsideextensions,
-                            com.atlassian.plugin.osgi.bridge.external,
-                            *
-                        </Import-Package>
-                        <Spring-Context>*</Spring-Context>
-                    </instructions>
-                    <pluginArtifacts>
-                        <pluginArtifact>
-                            <groupId>com.atlassian.plugins</groupId>
-                            <artifactId>atlassian-clientside-extensions-page-bootstrapper</artifactId>
-                            <version>${cse.version}</version>
-                        </pluginArtifact>
-                    </pluginArtifacts>
                     <products>
                         <product>
                             <id>bitbucket</id>
@@ -126,6 +109,24 @@
                             <dataVersion>${bitbucket.data.version}</dataVersion>
                         </product>
                     </products>
+                    <!-- https://developer.atlassian.com/server/framework/atlassian-sdk/bundling-extra-dependencies-in-an-obr/ -->
+                    <pluginDependencies>
+                        <pluginDependency>
+                            <groupId>com.atlassian.plugins</groupId>
+                            <artifactId>atlassian-clientside-extensions-page-bootstrapper</artifactId>
+                        </pluginDependency>
+                    </pluginDependencies>
+                    <instructions>
+                        <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
+                        <Atlassian-Scan-Folders>META-INF/plugin-descriptors</Atlassian-Scan-Folders>
+                        <Import-Package>
+                            <!-- https://developer.atlassian.com/server/framework/atlassian-sdk/bundling-extra-dependencies-in-an-obr/ -->
+                            com.atlassian.plugin.clientsideextensions;version="${cse.version}",
+                            com.atlassian.plugin.osgi.bridge.external,
+                            *
+                        </Import-Package>
+                        <Spring-Context>*</Spring-Context>
+                    </instructions>
                 </configuration>
             </plugin>
 
