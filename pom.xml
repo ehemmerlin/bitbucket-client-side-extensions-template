@@ -116,6 +116,14 @@
                             <artifactId>atlassian-clientside-extensions-page-bootstrapper</artifactId>
                         </pluginDependency>
                     </pluginDependencies>
+                    <!-- Needed to include the bootstrapper when starting the project with AMPS -->
+                    <pluginArtifacts>
+                        <pluginArtifact>
+                            <groupId>com.atlassian.plugins</groupId>
+                            <artifactId>atlassian-clientside-extensions-page-bootstrapper</artifactId>
+                            <version>${cse.version}</version>
+                        </pluginArtifact>
+                    </pluginArtifacts>
                     <instructions>
                         <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
                         <Atlassian-Scan-Folders>META-INF/plugin-descriptors</Atlassian-Scan-Folders>
