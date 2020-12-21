@@ -51,3 +51,20 @@ You should find and replace those values in all the files:
  - `config/webpack.constants.js` - `PLUGIN_KEY` const
  - `pom.xml` - `groupId` and `artifactId` tags
  - `package.json` - `name` field
+
+## Building plugin
+
+To create a plugin binary that can be installed on a standalone Bitbucket instance or published the marketplace,
+you will have to use the `atlas-package` command:
+
+```sh
+atlas-package
+```
+
+This command will create a `*.jar` and `*.obr` binary files under the `target` directory.
+
+## Links
+
+ - https://developer.atlassian.com/server/framework/atlassian-sdk/atlas-help
+   
+   Documentation for all the `atlas-*` CLI commands
