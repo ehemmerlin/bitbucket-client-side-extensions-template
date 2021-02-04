@@ -63,6 +63,71 @@ atlas-package
 
 This command will create a `*.jar` and `*.obr` binary files under the `target` directory.
 
+### Running plugin
+
+This plugin template is using the [`page-bootstrapper` plugin](https://developer.atlassian.com/server/framework/clientside-extensions/guides/how-to/setup-page-bootstrapper/).
+
+To run the distribution version of plugin on a standalone Bitbucket you will have to manually upload the required `page-bootstrapper` dependency to your Bitbucket:
+
+1. Go to the [maven registry](https://packages.atlassian.com/ui/repos/tree/General/maven-central-local%2Fcom%2Fatlassian%2Fplugins%2Fatlassian-clientside-extensions-page-bootstrapper)
+   and find the version of `atlassian-clientside-page-bootstrapper` you would like to install.
+   ![image](guides/page-bootstrapper-packages.png)
+3. Expand the version and find the `*.jar` file, then click `Download` link
+   ![image](guides/page-bootstrapper-download.png)
+4. Login into Administration panel of Bitbucket, go to `Mange Apps`, and press `Upload` button.
+5. Inside the modal select the downloaded `atlassian-clientside-page-bootstrapper.jar` file and press upload
+   ![image](guides/page-bootstrapper-upload.png)
+6. Wait for the package to be installed and enabled
+   ![image](guides/page-bootstrapper-installed.png)
+   
+### Removing page-bootstrapper
+
+If you don't plan to use the [`PageExtension`](https://developer.atlassian.com/server/framework/clientside-extensions/reference/api/extension-factories/page/) you can remove the `page-bootstrapper` dependency from the project:
+
+```patch
+diff --git a/pom.xml b/pom.xml
+index a1a918d..0d61c3a 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -82,12 +82,6 @@
+             <artifactId>gson</artifactId>
+             <version>${gson.libversion}</version>
+         </dependency>
+-        <!-- Page bootstrapper dependencies -->
+-        <dependency>
+-            <groupId>com.atlassian.plugins</groupId>
+-            <artifactId>atlassian-clientside-extensions-page-bootstrapper</artifactId>
+-            <version>${cse.version}</version>
+-        </dependency>
+     </dependencies>
+ 
+     <build>
+@@ -109,21 +103,6 @@
+                             <dataVersion>${bitbucket.data.version}</dataVersion>
+                         </product>
+                     </products>
+-                    <!-- https://developer.atlassian.com/server/framework/atlassian-sdk/bundling-extra-dependencies-in-an-obr/ -->
+-                    <pluginDependencies>
+-                        <pluginDependency>
+-                            <groupId>com.atlassian.plugins</groupId>
+-                            <artifactId>atlassian-clientside-extensions-page-bootstrapper</artifactId>
+-                        </pluginDependency>
+-                    </pluginDependencies>
+-                    <!-- Needed to include the bootstrapper when starting the project with AMPS -->
+-                    <pluginArtifacts>
+-                        <pluginArtifact>
+-                            <groupId>com.atlassian.plugins</groupId>
+-                            <artifactId>atlassian-clientside-extensions-page-bootstrapper</artifactId>
+-                            <version>${cse.version}</version>
+-                        </pluginArtifact>
+-                    </pluginArtifacts>
+                     <instructions>
+                         <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
+                         <Atlassian-Scan-Folders>META-INF/plugin-descriptors</Atlassian-Scan-Folders>
+```
+
+If you do that, then you will not have to manually install the `atlassian-clientside-page-bootstrapper.jar` plugin mentioned in the previous step. 
+
 ## Links
 
  - https://developer.atlassian.com/server/framework/atlassian-sdk/atlas-help
