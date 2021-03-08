@@ -38,7 +38,7 @@
         <jsonapi.version>0.11</jsonapi.version>
         <gson.libversion>2.3.1</gson.libversion>
 
-        <bitbucket.version>7.8.0</bitbucket.version>
+        <bitbucket.version>7.11.1</bitbucket.version>
         <bitbucket.data.version>${bitbucket.version}</bitbucket.data.version>
         <bitbucket.osgi.version>7.0.0</bitbucket.osgi.version>
 
