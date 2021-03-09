@@ -9,6 +9,7 @@ export default ButtonExtension.factory((pluginApi, context) => {
         hidden: false,
         header: 'My ext. header',
         label: 'My ext. cell',
+        className: 'demo-commits-table-extension',
         onAction: () => {
             console.log('My commits table extension', context);
         },

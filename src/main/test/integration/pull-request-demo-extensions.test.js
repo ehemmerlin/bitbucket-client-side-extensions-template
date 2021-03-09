@@ -45,6 +45,7 @@ describe('Pull Request demo extensions', () => {
     });
 
     it('should render an option item for the "bitbucket.ui.pullrequest.action" extension point', async () => {
+        // given
         const extensionLabel = 'My pull request action extension';
 
         // when
@@ -77,6 +78,7 @@ describe('Pull Request demo extensions', () => {
     });
 
     it('should render a comment option item for the "bitbucket.ui.pullrequest.comment.action" extension point', async () => {
+        // given
         const extensionLabel = 'My comment action extension';
 
         // when
@@ -93,6 +95,7 @@ describe('Pull Request demo extensions', () => {
     });
 
     it('should render a comment panel item for the "bitbucket.ui.pullrequest.comment.extra" extension point', async () => {
+        // given
         const extensionLabel = 'My comment extension';
 
         // when
@@ -104,5 +107,27 @@ describe('Pull Request demo extensions', () => {
 
         // then
         expect(label).toBeTruthy();
+    });
+
+    it('should render a table cell item for the "bitbucket.ui.pullrequest.commits.table.column.after" extension point', async () => {
+        // given
+        const extensionCellHeaderLabel = 'My ext. header';
+        const extensionCellLabel = 'My ext. cell';
+
+        // when
+        const commitsTab = await page.$('[data-testid="tab-COMMITS"]');
+        await commitsTab.click();
+        await page.waitForSelector('.commits-table-wrapper');
+        const commitsTableWrapper = await page.$$('.commits-table-wrapper');
+
+        await page.waitForSelector('.commits-table-wrapper');
+        await page.waitForSelector('.demo-commits-table-extension');
+
+        const header = await findElementByText(commitsTableWrapper, extensionCellHeaderLabel);
+        const cell = await findElementByText(commitsTableWrapper, extensionCellLabel);
+
+        // then
+        expect(header).toBeTruthy();
+        expect(cell).toBeTruthy();
     });
 });
