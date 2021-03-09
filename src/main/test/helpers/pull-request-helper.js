@@ -1,8 +1,5 @@
-const {
-    debugElement,
-    clickOnAndWaitForPageLoad,
-    disableAnimations,
-} = require('./puppeteer-helper');
+const { getRepository, getProject, getBaseUrl } = require('./env-helper');
+const { clickOnAndWaitForPageLoad, disableAnimations } = require('./puppeteer-helper');
 const { findElementByText, findElementByMatchingText } = require('./find-helpers');
 const { getCreatePullRequestUrl, getPullRequestUrl } = require('./url-helper');
 
@@ -82,7 +79,37 @@ async function deletePullRequest(pullRequestId) {
     console.debug(`Pull Request: Pull request ${pullRequestId} was deleted`);
 }
 
+async function createRegularCommentOnPullRequest(pullRequestId, commentText = 'Testing is fun!') {
+    console.debug('Pull Request: Creating regular comment...');
+
+    const baseUrl = getBaseUrl();
+    const project = getProject();
+    const repository = getRepository();
+
+    const url = `${baseUrl}/rest/api/latest/projects/${project}/repos/${repository}/pull-requests/${pullRequestId}/comments?diffType=EFFECTIVE`;
+
+    await page.evaluate(
+        async (url, commentText) => {
+            const payload = { text: commentText, severity: 'NORMAL' };
+
+            await fetch(url, {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+        },
+        url,
+        commentText
+    );
+
+    console.debug('Pull Request: Regular comment created.');
+}
+
 module.exports = {
     createPullRequest,
     deletePullRequest,
+    createRegularCommentOnPullRequest,
 };

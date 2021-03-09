@@ -2,7 +2,11 @@ const { disableAnimations } = require('../helpers/puppeteer-helper');
 const { findElementByText } = require('../helpers/find-helpers');
 const { disablePullRequestOnBoarding } = require('../helpers/bitbucket-helper');
 const { getPullRequestUrl } = require('../helpers/url-helper');
-const { createPullRequest, deletePullRequest } = require('../helpers/pull-request-helper');
+const {
+    createPullRequest,
+    deletePullRequest,
+    createRegularCommentOnPullRequest,
+} = require('../helpers/pull-request-helper');
 
 describe('Pull Request demo extensions', () => {
     let pullRequestId;
@@ -10,6 +14,7 @@ describe('Pull Request demo extensions', () => {
     beforeAll(async done => {
         await disablePullRequestOnBoarding();
         ({ pullRequestId } = await createPullRequest());
+        await createRegularCommentOnPullRequest(pullRequestId);
 
         done();
     });
@@ -69,5 +74,21 @@ describe('Pull Request demo extensions', () => {
 
         // then
         expect(extensionButton).toBeTruthy();
+    });
+
+    it('should render a comment option item for the "bitbucket.ui.pullrequest.comment.action" extension point', async () => {
+        const extensionLabel = 'My comment action extension';
+
+        // when
+        // Click on more actions and select
+        const commentOptionsButton = await page.$('[data-testid="comment-options--trigger"]');
+        await commentOptionsButton.click();
+        await page.waitForSelector('[data-testid="comment-options--content"]');
+
+        const commentOptions = await page.$('[data-testid="comment-options--content"]');
+        const option = await findElementByText(commentOptions, extensionLabel);
+
+        // then
+        expect(option).toBeTruthy();
     });
 });
