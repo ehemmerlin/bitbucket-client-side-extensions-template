@@ -22,12 +22,14 @@ async function getElementSelfText(element) {
 }
 
 /**
- * @param {import("puppeteer").ElementHandle} elements
+ * @param {import("puppeteer").ElementHandle|import("puppeteer").Page} element
  * @param {string} text
+ * @param {string} [elementType]
  * @return {Promise<import("puppeteer").ElementHandle|null>}
  */
-async function findElementByText(element, text) {
-    const children = /** @type {import("puppeteer").ElementHandle[]} */ await element.$$('*');
+async function findElementByText(element, text, elementType) {
+    const selector = elementType ? `${elementType}, ${elementType} *` : '*';
+    const children = /** @type {import("puppeteer").ElementHandle[]} */ await element.$$(selector);
 
     const texts = /** @type {string[]} */ await Promise.all(
         children.map(child => getElementSelfText(child))
@@ -37,7 +39,26 @@ async function findElementByText(element, text) {
     return index !== -1 ? children[index] : null;
 }
 
+/**
+ * @param {import("puppeteer").ElementHandle|import("puppeteer").Page} element
+ * @param {string} match
+ * @param {string} [elementType]
+ * @return {Promise<import("puppeteer").ElementHandle|null>}
+ */
+async function findElementByMatchingText(element, match, elementType = '*') {
+    const selector = elementType ? `${elementType}, ${elementType} *` : '*';
+    const children = /** @type {import("puppeteer").ElementHandle[]} */ await element.$$(selector);
+
+    const texts = /** @type {string[]} */ await Promise.all(
+        children.map(child => getElementSelfText(child))
+    );
+    const index = texts.findIndex(elementText => elementText.includes(match));
+
+    return index !== -1 ? children[index] : null;
+}
+
 module.exports = {
     getElementText,
     findElementByText,
+    findElementByMatchingText,
 };

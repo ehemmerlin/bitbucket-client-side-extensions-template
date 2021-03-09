@@ -13,6 +13,7 @@ export default ButtonExtension.factory((pluginApi, context) => {
         hidden: false,
         iconBefore,
         label: 'My overview extension',
+        className: 'demo-overview-extension',
         onAction: () => {
             console.log('My overview extension', context);
         },

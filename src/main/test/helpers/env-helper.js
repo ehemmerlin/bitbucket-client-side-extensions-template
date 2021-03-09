@@ -1,4 +1,15 @@
-const { baseUrl, userLogin, userPassword, debug, slowMo, timeout, width, height } = JSON.parse(
+const {
+    baseUrl,
+    userLogin,
+    userPassword,
+    project,
+    repository,
+    debug,
+    slowMo,
+    timeout,
+    width,
+    height,
+} = JSON.parse(
     // eslint-disable-next-line no-underscore-dangle
     process.env.__CONFIG__
 );
@@ -35,6 +46,14 @@ const getTestTimeout = () => {
     return timeout;
 };
 
+const getProject = () => {
+    return project;
+};
+
+const getRepository = () => {
+    return repository;
+};
+
 module.exports = {
     getBaseUrl,
     getUserLogin,
@@ -44,4 +63,6 @@ module.exports = {
     getBrowserWidth,
     getBrowserHeight,
     getTestTimeout,
+    getProject,
+    getRepository,
 };

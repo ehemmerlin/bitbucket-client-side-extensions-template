@@ -1,3 +1,4 @@
+const { clickOnAndWaitForPageLoad, disableAnimations } = require('../helpers/puppeteer-helper');
 const { findElementByText } = require('../helpers/find-helpers');
 const { getDashboardUrl } = require('../helpers/url-helper');
 
@@ -7,6 +8,7 @@ describe('My custom page', () => {
 
     beforeEach(async done => {
         await page.goto(getDashboardUrl());
+        await disableAnimations();
 
         done();
     });
@@ -23,7 +25,7 @@ describe('My custom page', () => {
 
         expect(navigationLink).toBeTruthy();
 
-        await Promise.all([page.waitForNavigation(), navigationLink.click()]);
+        await clickOnAndWaitForPageLoad(navigationLink);
 
         expect(page.url()).toMatch(pageUrl);
         const pageContent = await page.$('#content');

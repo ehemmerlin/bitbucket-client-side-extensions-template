@@ -1,13 +1,4 @@
-const { getBaseUrl, getProject, getPullRequestId, getRepo } = require('./env-helper.js');
-
-const getPullRequestUrl = () => {
-    const baseUrl = getBaseUrl();
-    const project = getProject();
-    const repo = getRepo();
-    const pullRequestId = getPullRequestId();
-
-    return `${baseUrl}/projects/${project}/repos/${repo}/pull-requests/${pullRequestId}`;
-};
+const { getBaseUrl, getProject, getRepository } = require('./env-helper.js');
 
 const getLoginUrl = () => {
     const baseUrl = getBaseUrl();
@@ -27,9 +18,35 @@ const getDashboardUrl = () => {
     return `${baseUrl}/dashboard`;
 };
 
+const getRepositoryUrl = () => {
+    const baseUrl = getBaseUrl();
+    const project = getProject();
+    const repo = getRepository();
+
+    return `${baseUrl}/projects/${project}/repos/${repo}`;
+};
+
+const getCreatePullRequestUrl = () => {
+    const repoUrl = getRepositoryUrl();
+
+    return `${repoUrl}/pull-requests?create`;
+};
+
+/**
+ * @param {number} pullRequestId
+ * @return {string}
+ */
+const getPullRequestUrl = pullRequestId => {
+    const repoUrl = getRepositoryUrl();
+
+    return `${repoUrl}/pull-requests/${pullRequestId}`;
+};
+
 module.exports = {
-    getPullRequestUrl,
     getLoginUrl,
     getLogoutUrl,
     getDashboardUrl,
+    getRepositoryUrl,
+    getCreatePullRequestUrl,
+    getPullRequestUrl,
 };

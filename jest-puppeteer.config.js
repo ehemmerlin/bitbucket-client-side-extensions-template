@@ -6,12 +6,14 @@ const {
     getSlowModeDelay,
 } = require('./src/main/test/helpers/env-helper.js');
 
-const headless = !isDebugModeEnabled();
+const debugMode = isDebugModeEnabled();
+const headless = !debugMode;
 
 module.exports = {
     launch: {
         headless,
-        slowMo: isDebugModeEnabled() ? getSlowModeDelay() : 0,
+        slowMo: debugMode ? getSlowModeDelay() : 0,
+        devtools: debugMode,
         defaultViewport: {
             width: getBrowserWidth(),
             height: getBrowserHeight(),
