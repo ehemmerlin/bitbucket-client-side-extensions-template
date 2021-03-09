@@ -12,6 +12,7 @@
         "prop-types": "15.7.2",
         "react": "16.12.0",
         "react-dom": "16.12.0",
+        "start-server-and-test": "1.12.0",
         "styled-components": "3.4.10"
     },
     "devDependencies": {
@@ -48,6 +49,7 @@
         "less-loader": "4.1.0",
         "mini-css-extract-plugin": "0.5.0",
         "network": "0.4.1",
+        "npm-run-all": "^4.1.5",
         "prettier": "1.18.2",
         "puppeteer": "^8.0.0",
         "react-hot-loader": "4.12.19",
@@ -61,14 +63,18 @@
     "scripts": {
         "watch": "webpack --watch --display-modules --config ./config/webpack.config.js",
         "start": "atlas-package -DskipTests -Pwatch-mode && npm run dev-server ",
+        "start:bitbucket": "atlas-run -DskipTests -DskipNpmInstall",
+        "start:bitbucket-forever": "yes \"WTF?! The yes command is needed to run Bitbucket on Pipelines \" | atlas-run -DskipTests -DskipNpmInstall",
         "build": "atlas-package -DskipTests",
         "build:prod": "webpack --config ./config/webpack.config.js",
         "build:dev": "webpack --config ./config/webpack.config.js --mode=development",
         "dev-server": "webpack-dev-server --config ./config/webpack.config.js --mode=development --env=dev-server",
-        "test": "jest --config ./config/jest/jest.config.js",
         "test:watch": "jest --config ./config/jest/jest.config.js --watch",
         "lint": "eslint './**/*.{js,jsx}'",
-        "test:integration": "node run-jest.js --config ./src/main/test/jest.config.js --runInBand"
+        "test": "jest --config ./config/jest/jest.config.js",
+        "test:ci": "run-p start:bitbucket-forever test:integration:waiter",
+        "test:integration:waiter": "npx wait-on http://localhost:7990/bitbucket -d 60000 -i 1000 && npm run test:integration:puppeteer",
+        "test:integration:puppeteer": "node run-jest.js --config ./src/main/test/jest.config.js --runInBand"
     },
     "browserslist": [
         "last 1 version",
