@@ -22,14 +22,19 @@ async function getElementSelfText(element) {
 }
 
 /**
- * @param {import("puppeteer").ElementHandle|import("puppeteer").Page} element
+ * @param {import("puppeteer").ElementHandle[]|import("puppeteer").ElementHandle|import("puppeteer").Page} elements
  * @param {string} text
  * @param {string} [elementType]
  * @return {Promise<import("puppeteer").ElementHandle|null>}
  */
-async function findElementByText(element, text, elementType) {
+async function findElementByText(elements, text, elementType) {
+    if (!Array.isArray(elements)) {
+        elements = [elements];
+    }
+
     const selector = elementType ? `${elementType}, ${elementType} *` : '*';
-    const children = /** @type {import("puppeteer").ElementHandle[]} */ await element.$$(selector);
+    const childrenPromises = await Promise.all(elements.map(element => element.$$(selector)));
+    const children = /** @type {import("puppeteer").ElementHandle[]} */ childrenPromises.flat(1);
 
     const texts = /** @type {string[]} */ await Promise.all(
         children.map(child => getElementSelfText(child))
@@ -40,14 +45,19 @@ async function findElementByText(element, text, elementType) {
 }
 
 /**
- * @param {import("puppeteer").ElementHandle|import("puppeteer").Page} element
+ * @param {import("puppeteer").ElementHandle[]|import("puppeteer").ElementHandle|import("puppeteer").Page} elements
  * @param {string} match
  * @param {string} [elementType]
  * @return {Promise<import("puppeteer").ElementHandle|null>}
  */
-async function findElementByMatchingText(element, match, elementType = '*') {
+async function findElementByMatchingText(elements, match, elementType = '*') {
+    if (!Array.isArray(elements)) {
+        elements = [elements];
+    }
+
     const selector = elementType ? `${elementType}, ${elementType} *` : '*';
-    const children = /** @type {import("puppeteer").ElementHandle[]} */ await element.$$(selector);
+    const childrenPromises = await Promise.all(elements.map(element => element.$$(selector)));
+    const children = /** @type {import("puppeteer").ElementHandle[]} */ childrenPromises.flat(1);
 
     const texts = /** @type {string[]} */ await Promise.all(
         children.map(child => getElementSelfText(child))

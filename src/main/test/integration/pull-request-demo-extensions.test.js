@@ -91,4 +91,18 @@ describe('Pull Request demo extensions', () => {
         // then
         expect(option).toBeTruthy();
     });
+
+    it('should render a comment panel item for the "bitbucket.ui.pullrequest.comment.extra" extension point', async () => {
+        const extensionLabel = 'My comment extension';
+
+        // when
+        // Wait for the comment to render
+        await page.waitForSelector('.comments-extension-panel-wrapper');
+        const commentExtensions = await page.$$('.comments-extension-panel-wrapper');
+
+        const label = await findElementByText(commentExtensions, extensionLabel);
+
+        // then
+        expect(label).toBeTruthy();
+    });
 });
