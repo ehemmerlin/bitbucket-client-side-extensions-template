@@ -12,9 +12,9 @@ module.exports = {
     launch: {
         headless,
         slowMo: isDebugModeEnabled() ? getSlowModeDelay() : 0,
-    },
-    defaultViewport: {
-        width: getBrowserWidth(),
-        height: getBrowserHeight(),
+        defaultViewport: {
+            width: getBrowserWidth(),
+            height: getBrowserHeight(),
+        },
     },
 };
