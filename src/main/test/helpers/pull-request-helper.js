@@ -1,7 +1,4 @@
 const { getRepository, getProject, getBaseUrl } = require('./env-helper');
-const { clickOnAndWaitForPageLoad, navigateTo } = require('./puppeteer-helper');
-const { findElementByText, findElementByMatchingText } = require('./find-helpers');
-const { getCreatePullRequestUrl, getPullRequestUrl } = require('./url-helper');
 
 /**
  * @param {import("puppeteer").Page} page
@@ -11,39 +8,71 @@ const { getCreatePullRequestUrl, getPullRequestUrl } = require('./url-helper');
 async function createPullRequest(page, sourceBranch = 'basic_branching') {
     console.debug(`Pull Request: Creating a new pull request...`);
 
-    await navigateTo(page, getCreatePullRequestUrl());
-    const sourceBranchDropdown = await page.$('#sourceBranch');
+    const baseUrl = getBaseUrl();
+    const project = getProject();
+    const repository = getRepository();
 
-    // Click on the dropdown and select branch
-    await sourceBranchDropdown.click();
-    await page.waitForSelector('#sourceBranchDialog');
-    const sourceBranchOptions = await page.$('#sourceBranchDialog');
+    const url = `${baseUrl}/rest/api/latest/projects/${project}/repos/${repository}/pull-requests`;
+    const payload = {
+        title: 'My Pull Request',
+        description: '',
+        state: 'OPEN',
+        open: true,
+        closed: false,
+        fromRef: {
+            id: `refs/heads/${sourceBranch}`,
+            repository: {
+                slug: repository,
+                name: null,
+                project: {
+                    key: project,
+                },
+            },
+        },
+        toRef: {
+            id: 'refs/heads/master',
+            repository: {
+                slug: repository,
+                name: null,
+                project: {
+                    key: project,
+                },
+            },
+        },
+        locked: false,
+        reviewers: [],
+    };
 
-    const option = await findElementByText(sourceBranchOptions, sourceBranch);
-    await option.click();
+    const pullRequestIdOrError = await page.evaluate(
+        async (url, payload) => {
+            const response = await fetch(url, {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
 
-    // Click on continue button
-    const continueButton = await page.$('#show-create-pr-button');
-    await continueButton.click();
+            if (response.status !== 201) {
+                return {
+                    error: await response.text(),
+                };
+            }
 
-    // Click on create button
-    const createButton = await page.$('#submit-form');
-    await clickOnAndWaitForPageLoad(page, createButton);
+            const { id: pullRequestId } = await response.json();
 
-    // Verify step
-    const failedResult = await findElementByMatchingText(
-        page,
-        'There is already a pull request open between'
+            return pullRequestId;
+        },
+        url,
+        payload
     );
 
-    if (failedResult) {
-        throw new Error(`Pull Request for ${sourceBranch} already exist`);
+    if (pullRequestIdOrError && pullRequestIdOrError.error) {
+        throw new Error(pullRequestIdOrError.error);
     }
 
-    const pageUrl = page.url();
-    const match = pageUrl.match(/pull-requests\/([0-9]+)\/overview$/);
-
-    const pullRequestId = parseInt(match.pop(), 10);
+    const pullRequestId = pullRequestIdOrError;
 
     console.debug(`Pull Request: A new pull request ${pullRequestId} was created`);
 
@@ -55,31 +84,45 @@ async function createPullRequest(page, sourceBranch = 'basic_branching') {
 /**
  * @param {import("puppeteer").Page} page
  * @param {number} pullRequestId
+ * @param {number} version
  * @return {Promise<void>}
  */
-async function deletePullRequest(page, pullRequestId) {
+async function deletePullRequest(page, pullRequestId, version = 1) {
     console.debug(`Pull Request: Deleting pull request ${pullRequestId}...`);
 
-    await navigateTo(page, getPullRequestUrl(pullRequestId));
+    const baseUrl = getBaseUrl();
+    const project = getProject();
+    const repository = getRepository();
 
-    // Click on more actions and select delete pull request
-    const moreActionsButton = await page.$('[data-testid="more-actions--trigger"]');
-    await moreActionsButton.click();
-    await page.waitForSelector('[data-testid="more-actions--content"]');
+    const url = `${baseUrl}/rest/api/latest/projects/${project}/repos/${repository}/pull-requests/${pullRequestId}`;
+    const payload = {
+        version,
+    };
 
-    const moreActionsOptions = await page.$('[data-testid="more-actions--content"]');
-    const deleteOption = await findElementByText(moreActionsOptions, 'Delete');
-    await deleteOption.click();
+    const result = await page.evaluate(
+        async (url, payload) => {
+            const response = await fetch(url, {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
 
-    // Confirm delete
-    await page.waitForSelector('[role="dialog"]');
-    const confirmDeletePullRequestButton = await findElementByText(
-        page,
-        'Delete pull request',
-        'button'
+            if (response.status !== 204) {
+                return {
+                    error: await response.text(),
+                };
+            }
+        },
+        url,
+        payload
     );
 
-    await clickOnAndWaitForPageLoad(page, confirmDeletePullRequestButton);
+    if (result && result.error) {
+        throw new Error(result.error);
+    }
 
     console.debug(`Pull Request: Pull request ${pullRequestId} was deleted`);
 }

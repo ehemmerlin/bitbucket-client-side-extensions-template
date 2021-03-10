@@ -47,7 +47,7 @@ async function debugElement(element) {
  * @return {Promise<void>}
  */
 async function navigateTo(page, url) {
-    console.log(`[Navigation] navigating to "${url}"`);
+    console.debug(`[Navigation] navigating to "${url}"`);
 
     await page.goto(url);
     await disableAnimations(page);

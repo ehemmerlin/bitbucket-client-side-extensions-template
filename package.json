@@ -75,8 +75,8 @@
         "lint": "eslint './**/*.{js,jsx}'",
         "test": "jest --config ./config/jest/jest.config.js",
         "test:ci": "run-p start:bitbucket-forever test:integration:waiter",
-        "test:integration:waiter": "npx wait-on http://localhost:7990/bitbucket/rest/api/1.0/projects -i 1000 && npm run test:integration:puppeteer --verbose",
-        "test:integration:puppeteer": "node run-jest.js --config ./src/main/test/jest.config.js --runInBand"
+        "test:integration:waiter": "npx wait-on http://localhost:7990/bitbucket/rest/api/1.0/projects -i 1000 && npm run test:integration:puppeteer",
+        "test:integration:puppeteer": "node run-jest.js --config ./src/main/test/jest.config.js --runInBand --verbose"
     },
     "browserslist": [
         "last 1 version",
