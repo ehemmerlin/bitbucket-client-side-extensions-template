@@ -30,7 +30,7 @@ async function disableAnimations(page) {
             }`,
     });
 
-    console.debug('CSS animations and transitions disabled');
+    console.debug('[CSS]: animations and transitions are disabled');
 }
 
 /**

@@ -8,8 +8,7 @@ const screenshotsPath = path.resolve(ROOT_DIR, 'screenshots');
 const toFilename = s => s.replace(/[^a-z0-9.-]+/gi, '_');
 
 export async function takeScreenshot(testName, pageInstance = page) {
-    // console.debug('Screenshot: Creating a screenshot after a test failure...');
-    console.debug('Screenshot: Creating a screenshot after finishing test...');
+    console.debug('[Screenshot]: Creating a screenshot after finishing test...');
 
     mkdirp.sync(screenshotsPath);
     const filePath = path.join(
@@ -21,7 +20,7 @@ export async function takeScreenshot(testName, pageInstance = page) {
         path: filePath,
     });
 
-    console.debug(`Screenshot: Screenshot saved ${filePath}`);
+    console.debug(`[Screenshot]: Screenshot saved ${filePath}`);
 }
 
 /**
@@ -40,8 +39,6 @@ afterAll(() => screenshotPromise);
  */
 jasmine.getEnv().addReporter({
     specDone: async result => {
-        // if (result.status === 'failed') {
         screenshotPromise = screenshotPromise.catch().then(() => takeScreenshot(result.fullName));
-        // }
     },
 });

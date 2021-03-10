@@ -138,7 +138,7 @@ async function createRegularCommentOnPullRequest(
     pullRequestId,
     commentText = 'Testing is fun!'
 ) {
-    console.debug('Pull Request: Creating regular comment...');
+    console.debug('[Pull Request]: Creating regular comment...');
 
     const baseUrl = getBaseUrl();
     const project = getProject();
@@ -163,7 +163,7 @@ async function createRegularCommentOnPullRequest(
         commentText
     );
 
-    console.debug('Pull Request: Regular comment created.');
+    console.debug('[Pull Request]: Regular comment created.');
 }
 
 module.exports = {

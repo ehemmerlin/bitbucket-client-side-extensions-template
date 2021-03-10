@@ -5,7 +5,7 @@ const { getBaseUrl } = require('./env-helper.js');
  * @return {Promise<void>}
  */
 async function disablePullRequestOnBoarding(page) {
-    console.debug('OnBoarding: Disabling feature on-boarding...');
+    console.debug('[OnBoarding]: Disabling feature on-boarding...');
 
     const baseUrl = getBaseUrl();
 
@@ -16,11 +16,11 @@ async function disablePullRequestOnBoarding(page) {
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded',
             },
-            body: 'json=[object Object]',
+            body: 'the-value-doesnt-matter',
         });
     }, baseUrl);
 
-    console.debug('OnBoarding: Feature on-boarding disabled...');
+    console.debug('[OnBoarding]: Feature on-boarding disabled...');
 }
 
 module.exports = {

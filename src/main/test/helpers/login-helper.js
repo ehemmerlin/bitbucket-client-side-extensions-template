@@ -9,13 +9,13 @@ const { getLoginUrl, getLogoutUrl } = require('./url-helper');
  * @return {Promise<void>}
  */
 async function doLogin(page, { login, password }) {
-    console.debug('Login: trying to login user');
+    console.debug('[Login]: trying to login user');
 
     const loginUrl = getLoginUrl();
 
     await navigateTo(page, loginUrl);
 
-    console.debug('Login: loaded login page');
+    console.debug('[Login]: loaded login page');
 
     const loginField = await page.$('#j_username');
     await loginField.type(login);
@@ -30,7 +30,7 @@ async function doLogin(page, { login, password }) {
         waitUntil: 'networkidle2',
     });
 
-    console.debug('Login: logged in user');
+    console.debug('[Login]: logged in user');
 }
 
 async function doLogout(page) {

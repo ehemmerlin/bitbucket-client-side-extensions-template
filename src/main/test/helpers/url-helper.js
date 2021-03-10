@@ -26,12 +26,6 @@ const getRepositoryUrl = () => {
     return `${baseUrl}/projects/${project}/repos/${repo}`;
 };
 
-const getCreatePullRequestUrl = () => {
-    const repoUrl = getRepositoryUrl();
-
-    return `${repoUrl}/pull-requests?create`;
-};
-
 /**
  * @param {number} pullRequestId
  * @return {string}
@@ -47,6 +41,5 @@ module.exports = {
     getLogoutUrl,
     getDashboardUrl,
     getRepositoryUrl,
-    getCreatePullRequestUrl,
     getPullRequestUrl,
 };
