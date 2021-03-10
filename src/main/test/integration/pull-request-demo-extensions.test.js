@@ -1,4 +1,4 @@
-const { disableAnimations } = require('../helpers/puppeteer-helper');
+const { navigateTo } = require('../helpers/puppeteer-helper');
 const { findElementByText } = require('../helpers/find-helpers');
 const { disablePullRequestOnBoarding } = require('../helpers/bitbucket-helper');
 const { getPullRequestUrl } = require('../helpers/url-helper');
@@ -26,8 +26,7 @@ describe('Pull Request demo extensions', () => {
     });
 
     beforeEach(async done => {
-        await page.goto(getPullRequestUrl(pullRequestId));
-        await disableAnimations();
+        await navigateTo(page, getPullRequestUrl(pullRequestId));
         done();
     });
 

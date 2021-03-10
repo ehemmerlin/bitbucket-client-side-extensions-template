@@ -1,4 +1,4 @@
-const { clickOnAndWaitForPageLoad, disableAnimations } = require('../helpers/puppeteer-helper');
+const { clickOnAndWaitForPageLoad, navigateTo } = require('../helpers/puppeteer-helper');
 const { findElementByText } = require('../helpers/find-helpers');
 const { getDashboardUrl } = require('../helpers/url-helper');
 
@@ -7,8 +7,7 @@ describe('My custom page', () => {
     const pageUrl = '/my-custom-page';
 
     beforeEach(async done => {
-        await page.goto(getDashboardUrl());
-        await disableAnimations();
+        await navigateTo(page, getDashboardUrl());
 
         done();
     });

@@ -1,7 +1,7 @@
+const { navigateTo } = require('./puppeteer-helper');
 const { getLoginUrl, getLogoutUrl } = require('./url-helper');
 
 /**
- *
  * @param {import("puppeteer").Page} page
  * @param {Object} options
  * @param {string} options.login
@@ -13,7 +13,7 @@ async function doLogin(page, { login, password }) {
 
     const loginUrl = getLoginUrl();
 
-    await page.goto(loginUrl);
+    await navigateTo(page, loginUrl);
 
     console.debug('Login: loaded login page');
 
@@ -36,7 +36,7 @@ async function doLogin(page, { login, password }) {
 async function doLogout(page) {
     const logoutUrl = getLogoutUrl();
 
-    await page.goto(logoutUrl);
+    await navigateTo(page, logoutUrl);
 }
 
 module.exports = {

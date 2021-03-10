@@ -1,5 +1,5 @@
 const { getRepository, getProject, getBaseUrl } = require('./env-helper');
-const { clickOnAndWaitForPageLoad, disableAnimations } = require('./puppeteer-helper');
+const { clickOnAndWaitForPageLoad, navigateTo } = require('./puppeteer-helper');
 const { findElementByText, findElementByMatchingText } = require('./find-helpers');
 const { getCreatePullRequestUrl, getPullRequestUrl } = require('./url-helper');
 
@@ -9,8 +9,7 @@ const { getCreatePullRequestUrl, getPullRequestUrl } = require('./url-helper');
 async function createPullRequest(sourceBranch = 'basic_branching') {
     console.debug(`Pull Request: Creating a new pull request...`);
 
-    await page.goto(getCreatePullRequestUrl());
-    await disableAnimations();
+    await navigateTo(page, getCreatePullRequestUrl());
     const sourceBranchDropdown = await page.$('#sourceBranch');
 
     // Click on the dropdown and select branch
@@ -54,8 +53,7 @@ async function createPullRequest(sourceBranch = 'basic_branching') {
 async function deletePullRequest(pullRequestId) {
     console.debug(`Pull Request: Deleting pull request ${pullRequestId}...`);
 
-    await page.goto(getPullRequestUrl(pullRequestId));
-    await disableAnimations();
+    await navigateTo(page, getPullRequestUrl(pullRequestId));
 
     // Click on more actions and select delete pull request
     const moreActionsButton = await page.$('[data-testid="more-actions--trigger"]');

@@ -8,7 +8,11 @@ async function clickOnAndWaitForPageLoad(element) {
     await Promise.all([page.waitForNavigation(), element.click()]);
 }
 
-async function disableAnimations() {
+/**
+ * @param {import("puppeteer").Page} page
+ * @return {Promise<void>}
+ */
+async function disableAnimations(page) {
     await page.addStyleTag({
         content: `
             *,
@@ -36,8 +40,21 @@ async function debugElement(element) {
     return element.evaluate(node => node.outerHTML);
 }
 
+/**
+ * @param {import("puppeteer").Page} page
+ * @param {string} url
+ * @return {Promise<void>}
+ */
+async function navigateTo(page, url) {
+    console.log(`[Navigation] navigating to "${url}"`);
+
+    await page.goto(url);
+    await disableAnimations(page);
+}
+
 module.exports = {
     clickOnAndWaitForPageLoad,
     disableAnimations,
     debugElement,
+    navigateTo,
 };
