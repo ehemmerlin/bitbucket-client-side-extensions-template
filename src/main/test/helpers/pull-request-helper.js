@@ -4,9 +4,10 @@ const { findElementByText, findElementByMatchingText } = require('./find-helpers
 const { getCreatePullRequestUrl, getPullRequestUrl } = require('./url-helper');
 
 /**
+ * @param {import("puppeteer").Page} page
  * @return {Promise<{pullRequestId: number}>}
  */
-async function createPullRequest(sourceBranch = 'basic_branching') {
+async function createPullRequest(page, sourceBranch = 'basic_branching') {
     console.debug(`Pull Request: Creating a new pull request...`);
 
     await navigateTo(page, getCreatePullRequestUrl());
@@ -26,7 +27,7 @@ async function createPullRequest(sourceBranch = 'basic_branching') {
 
     // Click on create button
     const createButton = await page.$('#submit-form');
-    await clickOnAndWaitForPageLoad(createButton);
+    await clickOnAndWaitForPageLoad(page, createButton);
 
     // Verify step
     const failedResult = await findElementByMatchingText(
@@ -50,7 +51,12 @@ async function createPullRequest(sourceBranch = 'basic_branching') {
     };
 }
 
-async function deletePullRequest(pullRequestId) {
+/**
+ * @param {import("puppeteer").Page} page
+ * @param {number} pullRequestId
+ * @return {Promise<void>}
+ */
+async function deletePullRequest(page, pullRequestId) {
     console.debug(`Pull Request: Deleting pull request ${pullRequestId}...`);
 
     await navigateTo(page, getPullRequestUrl(pullRequestId));
@@ -72,12 +78,22 @@ async function deletePullRequest(pullRequestId) {
         'button'
     );
 
-    await clickOnAndWaitForPageLoad(confirmDeletePullRequestButton);
+    await clickOnAndWaitForPageLoad(page, confirmDeletePullRequestButton);
 
     console.debug(`Pull Request: Pull request ${pullRequestId} was deleted`);
 }
 
-async function createRegularCommentOnPullRequest(pullRequestId, commentText = 'Testing is fun!') {
+/**
+ * @param {import("puppeteer").Page} page
+ * @param {number} pullRequestId
+ * @param {string} commentText
+ * @return {Promise<void>}
+ */
+async function createRegularCommentOnPullRequest(
+    page,
+    pullRequestId,
+    commentText = 'Testing is fun!'
+) {
     console.debug('Pull Request: Creating regular comment...');
 
     const baseUrl = getBaseUrl();

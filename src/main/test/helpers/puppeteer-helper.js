@@ -1,8 +1,9 @@
 /**
+ * @param {import("puppeteer").Page} page
  * @param {import("puppeteer").ElementHandle} element
  * @return {Promise<void>}
  */
-async function clickOnAndWaitForPageLoad(element) {
+async function clickOnAndWaitForPageLoad(page, element) {
     await element.focus();
 
     await Promise.all([page.waitForNavigation(), element.click()]);

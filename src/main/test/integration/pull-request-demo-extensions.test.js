@@ -12,15 +12,15 @@ describe('Pull Request demo extensions', () => {
     let pullRequestId;
 
     beforeAll(async done => {
-        await disablePullRequestOnBoarding();
-        ({ pullRequestId } = await createPullRequest());
-        await createRegularCommentOnPullRequest(pullRequestId);
+        await disablePullRequestOnBoarding(page);
+        ({ pullRequestId } = await createPullRequest(page));
+        await createRegularCommentOnPullRequest(page, pullRequestId);
 
         done();
     });
 
     afterAll(async done => {
-        await deletePullRequest(pullRequestId);
+        await deletePullRequest(page, pullRequestId);
 
         done();
     });

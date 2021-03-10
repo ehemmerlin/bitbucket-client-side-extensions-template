@@ -1,11 +1,10 @@
 const { getBaseUrl } = require('./env-helper.js');
 
 /**
- *
- * @param page
+ * @param {import("puppeteer").Page} page
  * @return {Promise<void>}
  */
-async function disablePullRequestOnBoarding() {
+async function disablePullRequestOnBoarding(page) {
     console.debug('OnBoarding: Disabling feature on-boarding...');
 
     const baseUrl = getBaseUrl();

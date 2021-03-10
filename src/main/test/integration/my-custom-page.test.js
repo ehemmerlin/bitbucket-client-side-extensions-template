@@ -24,7 +24,7 @@ describe('My custom page', () => {
 
         expect(navigationLink).toBeTruthy();
 
-        await clickOnAndWaitForPageLoad(navigationLink);
+        await clickOnAndWaitForPageLoad(page, navigationLink);
 
         expect(page.url()).toMatch(pageUrl);
         const pageContent = await page.$('#content');
