@@ -38,11 +38,15 @@
         <jsonapi.version>0.11</jsonapi.version>
         <gson.libversion>2.3.1</gson.libversion>
 
-        <bitbucket.version>7.8.0</bitbucket.version>
+        <bitbucket.version>7.11.1</bitbucket.version>
         <bitbucket.data.version>${bitbucket.version}</bitbucket.data.version>
         <bitbucket.osgi.version>7.0.0</bitbucket.osgi.version>
 
         <quick.reload.version>3.0.0</quick.reload.version>
+
+        <!-- if true, skip running NPM install during build (intended to be overridden via the command line) -->
+
+        <skipNpmInstall>false</skipNpmInstall>
     </properties>
 
     <dependencyManagement>
@@ -225,6 +229,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
+                            <skip>${skipNpmInstall}</skip>
                             <arguments>${fe.cmd.install}</arguments>
                         </configuration>
                     </execution>
