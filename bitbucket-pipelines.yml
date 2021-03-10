@@ -11,3 +11,5 @@ pipelines:
                     script:
                         - npm ci
                         - npm run test:ci
+                    artifacts:
+                        - screenshots/*.png
