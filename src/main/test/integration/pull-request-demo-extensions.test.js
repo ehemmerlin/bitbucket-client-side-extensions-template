@@ -34,9 +34,11 @@ describe('Pull Request demo extensions', () => {
         // given
         const extensionLabel = 'My overview extension';
 
+        // Wait for CSE to be loaded
+        await page.waitForSelector('.demo-overview-extension');
+
         // when
         const summaryPanel = await page.$('.summary-panel');
-        await page.waitForSelector('.demo-overview-extension');
         const extensionButton = await findElementByText(summaryPanel, extensionLabel);
 
         // then
@@ -46,6 +48,9 @@ describe('Pull Request demo extensions', () => {
     it('should render an option item for the "bitbucket.ui.pullrequest.action" extension point', async () => {
         // given
         const extensionLabel = 'My pull request action extension';
+
+        // Wait for CSE to be loaded
+        await page.waitForSelector('.demo-overview-extension');
 
         // when
         // Click on more actions and select
@@ -62,6 +67,9 @@ describe('Pull Request demo extensions', () => {
 
     it('should render a new button item for the "bitbucket.ui.pullrequest.diff.toolbar" extension point', async () => {
         const extensionLabel = 'My diff toolbar extension';
+
+        // Wait for CSE to be loaded
+        await page.waitForSelector('.demo-overview-extension');
 
         // when
         const diffTab = await page.$('[data-testid="tab-DIFF"]');
@@ -80,6 +88,9 @@ describe('Pull Request demo extensions', () => {
         // given
         const extensionLabel = 'My comment action extension';
 
+        // Wait for CSE to be loaded
+        await page.waitForSelector('.demo-overview-extension');
+
         // when
         // Click on more actions and select
         const commentOptionsButton = await page.$('[data-testid="comment-options--trigger"]');
@@ -97,6 +108,9 @@ describe('Pull Request demo extensions', () => {
         // given
         const extensionLabel = 'My comment extension';
 
+        // Wait for CSE to be loaded
+        await page.waitForSelector('.demo-overview-extension');
+
         // when
         // Wait for the comment to render
         await page.waitForSelector('.comments-extension-panel-wrapper');
@@ -113,15 +127,18 @@ describe('Pull Request demo extensions', () => {
         const extensionCellHeaderLabel = 'My ext. header';
         const extensionCellLabel = 'My ext. cell';
 
+        // Wait for CSE to be loaded
+        await page.waitForSelector('.demo-overview-extension');
+
         // when
         const commitsTab = await page.$('[data-testid="tab-COMMITS"]');
         await commitsTab.click();
         await page.waitForSelector('.commits-table-wrapper');
-        const commitsTableWrapper = await page.$$('.commits-table-wrapper');
 
         await page.waitForSelector('.commits-table-wrapper');
         await page.waitForSelector('.demo-commits-table-extension');
 
+        const commitsTableWrapper = await page.$$('.commits-table-wrapper');
         const header = await findElementByText(commitsTableWrapper, extensionCellHeaderLabel);
         const cell = await findElementByText(commitsTableWrapper, extensionCellLabel);
 
