@@ -5,6 +5,7 @@ const { getCreatePullRequestUrl, getPullRequestUrl } = require('./url-helper');
 
 /**
  * @param {import("puppeteer").Page} page
+ * @param {string} sourceBranch
  * @return {Promise<{pullRequestId: number}>}
  */
 async function createPullRequest(page, sourceBranch = 'basic_branching') {
