@@ -1,3 +1,5 @@
+const { getDocument } = require('pptr-testing-library');
+
 /**
  * @param {import("puppeteer").Page} page
  * @param {import("puppeteer").ElementHandle} element
@@ -44,13 +46,15 @@ async function debugElement(element) {
 /**
  * @param {import("puppeteer").Page} page
  * @param {string} url
- * @return {Promise<void>}
+ * @return {Promise<import("puppeteer").ElementHandle>}
  */
 async function navigateTo(page, url) {
     console.debug(`[Navigation] navigating to "${url}"`);
 
     await page.goto(url);
     await disableAnimations(page);
+
+    return getDocument(page);
 }
 
 module.exports = {
