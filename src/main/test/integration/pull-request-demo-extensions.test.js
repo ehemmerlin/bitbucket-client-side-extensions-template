@@ -69,7 +69,10 @@ describe('Pull Request demo extensions', () => {
         const extensionLabel = 'My diff toolbar extension';
 
         // when
-        const diffTab = await queries.getByTestId($document, 'tab-DIFF');
+        const diffTab = await Promise.race([
+            queries.findByTestId($document, 'Diff'), // >= 7.0 &&  < 7.10
+            queries.findByTestId($document, 'tab-DIFF'), // >= 7.10
+        ]);
         await diffTab.click();
 
         // Wait for change toolbar to be rendered
@@ -117,7 +120,10 @@ describe('Pull Request demo extensions', () => {
         const extensionCellLabel = 'My ext. cell';
 
         // when
-        const commitsTab = await queries.getByTestId($document, 'tab-COMMITS');
+        const commitsTab = await Promise.race([
+            queries.findByTestId($document, 'Commits'), // >= 7.0 &&  < 7.10
+            queries.findByTestId($document, 'tab-COMMITS'), // >= 7.10
+        ]);
         await commitsTab.click();
 
         await page.waitForSelector('.commits-table-wrapper');
