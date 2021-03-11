@@ -192,3 +192,9 @@ hs_err_pid*
 
 .node/
 node_modules/
+
+# Test screenshots
+/screenshots/
+
+# Test results
+/test-reports/
