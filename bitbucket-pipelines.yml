@@ -3,13 +3,41 @@ pipelines:
     default:
         - parallel:
               - step:
+                    name: CSE 2.x e2e tests
                     caches:
                         - node
                         - maven
-                    name: E2E tests
                     size: 2x
                     script:
                         - npm ci
+                        - npm run test:ci
+                    artifacts:
+                        - screenshots/*.png
+
+              - step:
+                    name: CSE 2.x extension with CSE 1.x runtime in Bitbucket 7.0.x compatibility
+                    caches:
+                        - node
+                        - maven
+                    size: 2x
+                    script:
+                        - npm ci
+                        - npx start-server-and-test 'yes "WTF?! The yes command is needed to run Bitbucket on Pipelines " | atlas-run --product bitbucket --version 7.0.6 --data-version 7.0.6 -DskipTests -DskipNpmInstall' http://localhost:7990/bitbucket/rest/api/1.0/projects 'npm run test:integration:puppeteer'
+                    artifacts:
+                        - screenshots/*.png
+
+              - step:
+                    name: CSE 1.x extension with CSE 2.x runtime in Bitbucket 7.11.x compatibility
+                    caches:
+                        - node
+                        - maven
+                    size: 2x
+                    script:
+                        - npm ci
+                        # Install CSE 1.x
+                        - npm install @atlassian/clientside-extensions@^1 @atlassian/clientside-extensions-components@^1 --save
+                        - npm install @atlassian/clientside-extensions-webpack-plugin@^1 --save-dev
+                        # Continue running tests
                         - npm run test:ci
                     artifacts:
                         - screenshots/*.png
