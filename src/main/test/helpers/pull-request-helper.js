@@ -1,3 +1,4 @@
+const { queries, waitFor } = require('pptr-testing-library');
 const { getRepository, getProject, getBaseUrl } = require('./env-helper');
 
 /**
@@ -87,7 +88,7 @@ async function createPullRequest(page, sourceBranch = 'basic_branching') {
  * @param {number} version
  * @return {Promise<void>}
  */
-async function deletePullRequest(page, pullRequestId, version = 1) {
+async function deletePullRequest(page, pullRequestId, version = 0) {
     console.debug(`Pull Request: Deleting pull request ${pullRequestId}...`);
 
     const baseUrl = getBaseUrl();
@@ -103,7 +104,7 @@ async function deletePullRequest(page, pullRequestId, version = 1) {
         async (url, payload) => {
             const response = await fetch(url, {
                 credentials: 'include',
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     'content-type': 'application/json',
                 },
@@ -166,8 +167,17 @@ async function createRegularCommentOnPullRequest(
     console.debug('[Pull Request]: Regular comment created.');
 }
 
+/**
+ * @param {import("puppeteer").ElementHandle} $document
+ * @return {Promise<void>}
+ */
+async function waitForCseToBeLoaded($document) {
+    await waitFor(() => queries.getByText($document, 'My overview extension'));
+}
+
 module.exports = {
     createPullRequest,
     deletePullRequest,
     createRegularCommentOnPullRequest,
+    waitForCseToBeLoaded,
 };

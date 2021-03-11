@@ -1,11 +1,13 @@
+const { queries, waitFor } = require('pptr-testing-library');
+
 const { navigateTo } = require('../helpers/puppeteer-helper');
-const { findElementByText } = require('../helpers/find-helpers');
 const { disablePullRequestOnBoarding } = require('../helpers/bitbucket-helper');
 const { getPullRequestUrl } = require('../helpers/url-helper');
 const {
     createPullRequest,
     deletePullRequest,
     createRegularCommentOnPullRequest,
+    waitForCseToBeLoaded,
 } = require('../helpers/pull-request-helper');
 
 describe('Pull Request demo extensions', () => {
@@ -25,8 +27,13 @@ describe('Pull Request demo extensions', () => {
         done();
     });
 
+    /** @type {import("puppeteer").ElementHandle} */
+    let $document;
+
     beforeEach(async done => {
-        await navigateTo(page, getPullRequestUrl(pullRequestId));
+        $document = await navigateTo(page, getPullRequestUrl(pullRequestId));
+        await waitForCseToBeLoaded($document);
+
         done();
     });
 
@@ -34,12 +41,8 @@ describe('Pull Request demo extensions', () => {
         // given
         const extensionLabel = 'My overview extension';
 
-        // Wait for CSE to be loaded
-        await page.waitForSelector('.demo-overview-extension');
-
         // when
-        const summaryPanel = await page.$('.summary-panel');
-        const extensionButton = await findElementByText(summaryPanel, extensionLabel);
+        const extensionButton = await queries.getByText($document, extensionLabel);
 
         // then
         expect(extensionButton).toBeTruthy();
@@ -49,17 +52,14 @@ describe('Pull Request demo extensions', () => {
         // given
         const extensionLabel = 'My pull request action extension';
 
-        // Wait for CSE to be loaded
-        await page.waitForSelector('.demo-overview-extension');
-
         // when
-        // Click on more actions and select
-        const moreActionsButton = await page.$('[data-testid="more-actions--trigger"]');
+        // Click on more actions and select the extension option
+        const moreActionsButton = await queries.getByTestId($document, 'more-actions--trigger');
         await moreActionsButton.click();
-        await page.waitForSelector('[data-testid="more-actions--content"]');
+        await waitFor(() => queries.getByTestId($document, 'more-actions--content'));
 
-        const moreActionsOptions = await page.$('[data-testid="more-actions--content"]');
-        const option = await findElementByText(moreActionsOptions, extensionLabel);
+        const moreActionsOptions = await queries.getByTestId($document, 'more-actions--content');
+        const option = await queries.findByText(moreActionsOptions, extensionLabel);
 
         // then
         expect(option).toBeTruthy();
@@ -68,17 +68,13 @@ describe('Pull Request demo extensions', () => {
     it('should render a new button item for the "bitbucket.ui.pullrequest.diff.toolbar" extension point', async () => {
         const extensionLabel = 'My diff toolbar extension';
 
-        // Wait for CSE to be loaded
-        await page.waitForSelector('.demo-overview-extension');
-
         // when
-        const diffTab = await page.$('[data-testid="tab-DIFF"]');
+        const diffTab = await queries.getByTestId($document, 'tab-DIFF');
         await diffTab.click();
-        // Wait for change toolbar to be rendered
-        await page.waitForSelector('.diff-toolbar-extension');
 
-        const diffToolbar = await page.$('.diff-toolbar-extension');
-        const extensionButton = await findElementByText(diffToolbar, extensionLabel);
+        // Wait for change toolbar to be rendered
+        await waitFor(() => queries.findByText($document, extensionLabel));
+        const extensionButton = await queries.findByText($document, extensionLabel);
 
         // then
         expect(extensionButton).toBeTruthy();
@@ -88,17 +84,16 @@ describe('Pull Request demo extensions', () => {
         // given
         const extensionLabel = 'My comment action extension';
 
-        // Wait for CSE to be loaded
-        await page.waitForSelector('.demo-overview-extension');
-
         // when
-        // Click on more actions and select
-        const commentOptionsButton = await page.$('[data-testid="comment-options--trigger"]');
+        const commentOptionsButton = await queries.getByTestId(
+            $document,
+            'comment-options--trigger'
+        );
         await commentOptionsButton.click();
-        await page.waitForSelector('[data-testid="comment-options--content"]');
+        await waitFor(() => queries.getByTestId($document, 'comment-options--content'));
 
-        const commentOptions = await page.$('[data-testid="comment-options--content"]');
-        const option = await findElementByText(commentOptions, extensionLabel);
+        const moreActionsOptions = await queries.getByTestId($document, 'comment-options--content');
+        const option = await queries.findByText(moreActionsOptions, extensionLabel);
 
         // then
         expect(option).toBeTruthy();
@@ -108,15 +103,9 @@ describe('Pull Request demo extensions', () => {
         // given
         const extensionLabel = 'My comment extension';
 
-        // Wait for CSE to be loaded
-        await page.waitForSelector('.demo-overview-extension');
-
         // when
-        // Wait for the comment to render
-        await page.waitForSelector('.comments-extension-panel-wrapper');
-        const commentExtensions = await page.$$('.comments-extension-panel-wrapper');
-
-        const label = await findElementByText(commentExtensions, extensionLabel);
+        await waitFor(() => queries.findByText($document, extensionLabel));
+        const label = await queries.findByText($document, extensionLabel);
 
         // then
         expect(label).toBeTruthy();
@@ -127,20 +116,16 @@ describe('Pull Request demo extensions', () => {
         const extensionCellHeaderLabel = 'My ext. header';
         const extensionCellLabel = 'My ext. cell';
 
-        // Wait for CSE to be loaded
-        await page.waitForSelector('.demo-overview-extension');
-
         // when
-        const commitsTab = await page.$('[data-testid="tab-COMMITS"]');
+        const commitsTab = await queries.getByTestId($document, 'tab-COMMITS');
         await commitsTab.click();
-        await page.waitForSelector('.commits-table-wrapper');
 
         await page.waitForSelector('.commits-table-wrapper');
         await page.waitForSelector('.demo-commits-table-extension');
 
-        const commitsTableWrapper = await page.$$('.commits-table-wrapper');
-        const header = await findElementByText(commitsTableWrapper, extensionCellHeaderLabel);
-        const cell = await findElementByText(commitsTableWrapper, extensionCellLabel);
+        const commitsTableWrapper = await page.$('.commits-table-wrapper');
+        const header = await queries.findByText(commitsTableWrapper, extensionCellHeaderLabel);
+        const cell = await queries.findByText(commitsTableWrapper, extensionCellLabel);
 
         // then
         expect(header).toBeTruthy();
