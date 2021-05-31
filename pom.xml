@@ -172,6 +172,8 @@
                         <Atlassian-Scan-Folders>META-INF/plugin-descriptors</Atlassian-Scan-Folders>
                         <Import-Package>
                             <!-- https://developer.atlassian.com/server/framework/atlassian-sdk/bundling-extra-dependencies-in-an-obr/ -->
+                            <!-- The "com.atlassian.plugin.clientsideextensions" import is required by the page-bootstrapper package.
+                            If you don't need it, you can remove this line. -->
                             com.atlassian.plugin.clientsideextensions;version="${cse.version}",
                             com.atlassian.plugin.osgi.bridge.external,
                             *
