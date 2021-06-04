@@ -3,6 +3,22 @@ pipelines:
     default:
         - parallel:
               - step:
+                    name: Linting
+                    caches:
+                        - node
+                    script:
+                        - npm ci
+                        - npm run lint
+
+              - step:
+                    name: Testing
+                    caches:
+                        - node
+                    script:
+                        - npm ci
+                        - npm run test
+
+              - step:
                     name: CSE 2.x e2e tests
                     caches:
                         - node
