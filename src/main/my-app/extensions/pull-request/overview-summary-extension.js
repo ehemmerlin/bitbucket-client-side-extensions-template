@@ -15,7 +15,7 @@ export default ButtonExtension.factory((pluginApi, context) => {
         label: 'My overview extension',
         className: 'demo-overview-extension',
         onAction: () => {
-            console.log('My overview extension', context);
+            console.log('My overview extensive', context);
         },
     };
 });
